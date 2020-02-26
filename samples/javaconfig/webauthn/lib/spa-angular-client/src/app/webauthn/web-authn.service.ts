@@ -166,12 +166,14 @@ export class WebAuthnService {
   }
 
   static isWebAuthnAvailable(): boolean{
-    let untypedWindow: any = window;
-    return navigator.credentials && untypedWindow.PublicKeyCredential;
+    // let untypedWindow: any = window;
+    // return navigator.credentials && untypedWindow.PublicKeyCredential;
+    return true;
   }
 
   static isResidentKeyLoginAvailable(): boolean{
-    return WebAuthnService.isWebAuthnAvailable() &&
-      this.bowser.satisfies({windows: { chrome: '>118.01.1322' } });
+    // return WebAuthnService.isWebAuthnAvailable() &&
+    //   this.bowser.satisfies({windows: { chrome: '>118.01.1322' } });
+    return WebAuthnService.isWebAuthnAvailable();
   }
 }
