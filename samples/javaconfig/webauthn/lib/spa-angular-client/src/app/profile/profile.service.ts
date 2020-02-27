@@ -15,7 +15,7 @@
  */
 
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {RegisteringAuthenticatorViewModel} from "../webauthn/registering-authenticator.view-model";
 import {WebAuthnService} from "../webauthn/web-authn.service";
 import {Observable} from "rxjs/internal/Observable";
@@ -31,7 +31,7 @@ import {RegisteringAuthenticatorForm} from "./registering-authenticator.form";
 import {ExistingAuthenticatorForm} from "./existing-authenticator.form";
 import {ExistingAuthenticatorViewModel} from "../webauthn/existing-authenticator.view-model";
 import {map} from "rxjs/operators";
-import {UserForm} from "../user/user.form";
+import {CrObject} from "./crobject";
 
 @Injectable({
   providedIn: 'root'
@@ -102,7 +102,9 @@ export class ProfileService implements OnInit {
   }
 
   load(): Observable<ProfileViewModel> {
-    return this.http.get<ProfileForm>(this.profileUrl).pipe(map((profileForm: ProfileForm) => {
+    let result : Observable<ProfileViewModel>;
+    result =
+    this.http.get<ProfileForm>(this.profileUrl).pipe(map((profileForm: ProfileForm) => {
       return {
         userHandle: profileForm.userHandle,
         firstName: profileForm.firstName,
@@ -113,7 +115,22 @@ export class ProfileService implements OnInit {
         singleFactorAuthenticationAllowed: profileForm.singleFactorAuthenticationAllowed
       };
     }));
+    return result;
   }
+
+  load2(req_person: string): Observable<CrObject> {
+        let req_url = "http://person.pool.c4-dev.chromeriver.com/persons/";
+        const httpOptions = {
+          headers: new HttpHeaders({
+            // ["customerId"]: "HQC4",
+            ["customerId"]: "947",
+            ["customerUniqueId"]: req_person
+          })
+        };
+        return this.http.get<CrObject>(req_url, httpOptions);
+  }
+
+
 
   remove(): Observable<void> {
     return this.http.delete<void>(this.profileUrl);

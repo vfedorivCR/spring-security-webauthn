@@ -24,6 +24,7 @@ import {AuthenticatorRegistrationReconfirmationDialogComponent} from "../authent
 import {Alert} from "../alert/alert";
 import {ProfileService} from "./profile.service";
 import {ProfileUpdateViewModel} from "./profile-update.view-model";
+import {ProfileUpdateViewModelExt} from "./profile-update.view-model-ext";
 import {ResidentKeyRequirementDialogComponent} from "../resident-key-requirement-dialog/resident-key-requirement-dialog.component";
 import {AuthService} from "../auth/auth.service";
 
@@ -34,11 +35,26 @@ import {AuthService} from "../auth/auth.service";
 })
 export class ProfileComponent implements OnInit {
 
+
   constructor(
               private profileService: ProfileService,
               private authService: AuthService,
               private router: Router,
               private modalService: NgbModal) { }
+
+  // ngOnInit() {
+  //   this.profileService.load().subscribe((user)=>{
+  //     this.user.userHandle = user.userHandle;
+  //     this.user.firstName = user.firstName;
+  //     this.user.lastName = user.lastName;
+  //     this.user.emailAddress = user.emailAddress;
+  //     this.user.authenticators = user.authenticators;
+  //     this.user.singleFactorAuthenticationAllowed = user.singleFactorAuthenticationAllowed;
+  //   });
+  //   this.checkUVPAA().then((isUVPAA)=>{
+  //     this.isUVPAA = isUVPAA;
+  //   });
+  // }
 
   ngOnInit() {
     this.profileService.load().subscribe((user)=>{
@@ -49,6 +65,14 @@ export class ProfileComponent implements OnInit {
       this.user.authenticators = user.authenticators;
       this.user.singleFactorAuthenticationAllowed = user.singleFactorAuthenticationAllowed;
     });
+
+    let req_person : string;
+    req_person = this.user.firstName + '_' + this.user.lastName;
+    this.profileService.load2(req_person).subscribe((cr_user)=>{
+      this.user.crSite = cr_user.crSite;
+      this.user.currencyCode1 = cr_user.currencyCode1;
+    });
+
     this.checkUVPAA().then((isUVPAA)=>{
       this.isUVPAA = isUVPAA;
     });
@@ -60,14 +84,25 @@ export class ProfileComponent implements OnInit {
 
   alerts: Alert[] = [];
 
-  user: ProfileUpdateViewModel = {
+//   user: ProfileUpdateViewModel = {
+//     userHandle: "",
+//     firstName: "",
+//     lastName: "",
+//     emailAddress: "",
+//     authenticators: [],
+//     singleFactorAuthenticationAllowed: false
+// };
+
+  user: ProfileUpdateViewModelExt = {
     userHandle: "",
     firstName: "",
     lastName: "",
     emailAddress: "",
     authenticators: [],
-    singleFactorAuthenticationAllowed: false
-};
+    singleFactorAuthenticationAllowed: false,
+    crSite: "",
+    currencyCode1: ""
+  };
 
   addAuthenticator() {
 

@@ -44,6 +44,11 @@
       </div>
     </div>
     <div class="form-group">
+      <label for="currencyCode1">currencyCode1</label>
+      <input type="text" id="currencyCode1" name="currencyCode1" [(ngModel)]="user.currencyCode1" #lastname="ngModel"
+             class="form-control" />
+    </div>
+    <div class="form-group">
       <label for="username">E-mail</label>
       <input type="text" id="username" name="username" [(ngModel)]="user.emailAddress" #username="ngModel"
              class="form-control" [class.is-invalid]="username.invalid && username.touched"
