@@ -85,19 +85,24 @@
               <div class="button-group col-4 text-right">
 
               <div class="tooltip-wrapper">
+               <button type="button" id="addAuthenticator" class="btn col-3" (click)="addAuthenticator()" [disabled]="!isWebAuthnAvailable() || username.invalid">
+                </button>
                             -->
-                <button type="button" id="addAuthenticator" class="btn col-3" (click)="addAuthenticator()" [disabled]="!isWebAuthnAvailable() || username.invalid">
+
                 <!--
                 <button type="button" id="addAuthenticator" class="btn btn-light btn-sm" (click)="addAuthenticator()" [disabled]="!isWebAuthnAvailable() || username.invalid">
                 <i class="fas fa-plus-square"></i>
-                -->
                 </button>
+                -->
+
               <!--
               </div>
 
             </div>
             -->
           </div>
+          <button type="button" id="addAuthenticator"   class="btn btn-primary col-3" (click)="addAuthenticator()" [disabled]="username.invalid"> Add
+          </button>
         </div>
         <div class="card-body">
           <ul class="list-group" *ngFor="let authenticator of user.authenticators">
