@@ -42,20 +42,6 @@ export class ProfileComponent implements OnInit {
               private router: Router,
               private modalService: NgbModal) { }
 
-  // ngOnInit() {
-  //   this.profileService.load().subscribe((user)=>{
-  //     this.user.userHandle = user.userHandle;
-  //     this.user.firstName = user.firstName;
-  //     this.user.lastName = user.lastName;
-  //     this.user.emailAddress = user.emailAddress;
-  //     this.user.authenticators = user.authenticators;
-  //     this.user.singleFactorAuthenticationAllowed = user.singleFactorAuthenticationAllowed;
-  //   });
-  //   this.checkUVPAA().then((isUVPAA)=>{
-  //     this.isUVPAA = isUVPAA;
-  //   });
-  // }
-
   ngOnInit() {
     this.profileService.load().subscribe((user)=>{
       this.user.userHandle = user.userHandle;
@@ -66,12 +52,12 @@ export class ProfileComponent implements OnInit {
       this.user.singleFactorAuthenticationAllowed = user.singleFactorAuthenticationAllowed;
     });
 
-    let req_person : string;
-    req_person = this.user.firstName + '_' + this.user.lastName;
-    this.profileService.load2(req_person).subscribe((cr_user)=>{
-      this.user.crSite = cr_user.crSite;
-      this.user.currencyCode1 = cr_user.currencyCode1;
-    });
+    // let req_person : string;
+    // req_person = this.user.firstName + '_' + this.user.lastName;
+    // this.profileService.load2(req_person).subscribe((cr_user)=>{
+    //   this.user.crSite = cr_user.crSite;
+    //   this.user.currencyCode1 = cr_user.currencyCode1;
+    // });
 
     this.checkUVPAA().then((isUVPAA)=>{
       this.isUVPAA = isUVPAA;
